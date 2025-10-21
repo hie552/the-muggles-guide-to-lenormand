@@ -1,0 +1,16 @@
+[
+  {
+    "id": "01_RIDER",
+    "name": "The Rider",
+    "keywords": "소식, 메시지, 열정",
+    "message": "오늘은 좋은 소식이 당신을 찾아올 거예요. 새로운 기회나 만남이 문 앞에 기다리고 있습니다. 열린 마음으로 맞이하세요.",
+    "image": "images/01_RIDER.png"
+  },
+  {
+    "id": "02_CLOVER",
+    "name": "The Clover",
+    "keywords": "행운, 작은 금전운, 기회",
+    "message": "작지만 반짝이는 기쁨이 오늘 당신을 비춥니다. 너무 큰 기대보다는, 사소한 기적을 눈여겨보세요.",
+    "image": "images/02_CLOVER.png"
+  }
+]
