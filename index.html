@@ -17,7 +17,7 @@
         }
 
         body {
-            font-family: 'HarryPotter', 'Georgia', serif;
+            font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
             background-image: url('background_0.png');
             background-size: 400px;
             background-position: top left;
@@ -53,20 +53,21 @@
         }
 
         h1 {
-            color: #f0e6d2;
-            font-size: 1.3em;
-            margin-bottom: 5px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            color: #2c1810;
+            font-size: 1.6em;
+            margin-bottom: 8px;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
             letter-spacing: 1px;
             line-height: 1.4;
+            font-weight: bold;
         }
 
         .subtitle {
-            color: #d4af37;
-            font-size: 0.85em;
+            color: #5c4033;
+            font-size: 1em;
             margin-bottom: 25px;
             font-style: italic;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
         }
 
         .card-container {
@@ -145,18 +146,20 @@
         }
 
         .card-meaning h2 {
-            color: #d4af37;
-            font-size: 1.5em;
+            color: #5c4033;
+            font-size: 1.4em;
             margin-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 2px;
+            font-weight: bold;
         }
 
         .card-meaning .keywords {
-            color: #c5a028;
+            color: #8b6914;
             font-style: italic;
             margin-bottom: 15px;
             font-size: 1.1em;
+            font-weight: 600;
         }
 
         .card-meaning .description {
@@ -169,15 +172,14 @@
             color: #1a1a2e;
             border: none;
             padding: 18px 50px;
-            font-size: 1.3em;
+            font-size: 1.2em;
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
             letter-spacing: 1px;
             box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
             transition: all 0.3s ease;
-            text-transform: uppercase;
-            font-family: 'HarryPotter', 'Georgia', serif;
+            font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
         }
 
         .draw-button:hover {
@@ -231,12 +233,12 @@
         }
 
         .instruction {
-            color: #d4af37;
+            color: #5c4033;
             margin-top: 20px;
-            font-size: 0.9em;
+            font-size: 0.95em;
             font-style: italic;
-            opacity: 0.8;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
         }
     </style>
 </head>
@@ -250,7 +252,7 @@
         <div class="card-container">
             <div class="card" id="card">
                 <div class="card-face card-back">
-                    <img src="card-back.png" alt="카드 뒷면">
+                    <img src="mgl_b_gr.png" alt="카드 뒷면">
                 </div>
                 <div class="card-face card-front" id="cardFront">
                     <img id="cardImage" src="" alt="카드">
@@ -264,8 +266,8 @@
             <div class="description" id="cardDescription"></div>
         </div>
 
-        <button class="draw-button" id="drawButton">Draw a Card</button>
-        <p class="instruction">Tap the card to flip it back</p>
+        <button class="draw-button" id="drawButton">카드 뽑기</button>
+        <p class="instruction">카드를 탭하면 다시 뒤집을 수 있습니다</p>
     </div>
 
     <script>
@@ -275,15 +277,15 @@
                 num: '01', 
                 name: 'RIDER', 
                 image: '01_RIDER.png',
-                keywords: 'News, Visitor, New Beginning', 
-                meaning: 'Good news or new opportunities are coming your way quickly. Like Hagrid, you may receive unexpected visitors or messages. An adventure awaits!' 
+                keywords: '소식, 방문자, 새로운 시작', 
+                meaning: '좋은 소식이나 새로운 기회가 빠르게 다가오고 있습니다. 해그리드처럼 예상치 못한 방문자나 메시지를 받을 수 있습니다. 모험이 당신을 기다리고 있어요!' 
             },
             { 
                 num: '02', 
                 name: 'CLOVER', 
                 image: '02_CLOVER.png',
-                keywords: 'Luck, Opportunity, Short-term Happiness', 
-                meaning: 'Like Felix Felicis (Liquid Luck), small but certain fortune is coming. Don\'t miss the opportunity. A positive attitude brings even greater luck!' 
+                keywords: '행운, 기회, 단기간의 행복', 
+                meaning: '펠릭스 펠리시스(행운의 물약)처럼 작지만 확실한 행운이 찾아옵니다. 기회를 놓치지 마세요. 긍정적인 태도가 더 큰 행운을 불러옵니다!' 
             }
         ];
 
