@@ -1,517 +1,300 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Muggle's Guide to Lenormand</title>
-    <style>
-        @font-face {
-            font-family: 'HarryPotter';
-            src: url('HarryPotterDemoRegular.ttf') format('truetype');
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Muggle's Guide to Lenormand</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <!-- 🔮 SNS 미리보기 메타데이터 -->
+  <meta property="og:title" content="The Muggle's Guide to Lenormand">
+  <meta property="og:description" content="당신의 오늘의 마법 같은 메시지를 확인해보세요. ✨">
+  <meta property="og:image" content="https://hie552.github.io/the-muggles-guide-to-lenormand/mgl_b_gr.png">
+  <meta property="og:url" content="https://hie552.github.io/the-muggles-guide-to-lenormand/">
+  <meta name="twitter:card" content="summary_large_image">
 
-        body {
-            font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-            background-image: url('background_0.png');
-            background-size: 400px;
-            background-position: top left;
-            background-attachment: fixed;
-            background-repeat: repeat;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
-        }
+  <style>
+    @font-face {
+      font-family: 'HarryPotter';
+      src: url('HarryPotterDemoRegular.ttf') format('truetype');
+    }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.3);
-            z-index: 0;
-            pointer-events: none;
-        }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .container {
-            text-align: center;
-            padding: 20px;
-            max-width: 500px;
-            width: 90%;
-            position: relative;
-            z-index: 1;
-        }
+    body {
+      font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+      background-image: url('background_0.png');
+      background-size: 400px;
+      background-repeat: repeat;
+      background-attachment: fixed;
+      background-position: top left;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-        h1 {
-            color: #2c1810;
-            font-size: 1.6em;
-            margin-bottom: 8px;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
-            letter-spacing: 1px;
-            line-height: 1.4;
-            font-weight: bold;
-        }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.25);
+      z-index: 0;
+    }
 
-        .subtitle {
-            color: #5c4033;
-            font-size: 1em;
-            margin-bottom: 25px;
-            font-style: italic;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
-        }
+    .container {
+      text-align: center;
+      max-width: 480px;
+      width: 90%;
+      padding: 25px;
+      position: relative;
+      z-index: 1;
+    }
 
-        .card-container {
-            perspective: 1000px;
-            width: 100%;
-            max-width: 350px;
-            margin: 0 auto 40px;
-        }
+    h1 {
+      font-size: 1.7em;
+      color: #2c1810;
+      margin-bottom: 8px;
+      text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+      font-weight: bold;
+    }
 
-        .card {
-            width: 100%;
-            aspect-ratio: 2/3;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
-            cursor: pointer;
-        }
+    .subtitle {
+      color: #5c4033;
+      font-size: 1em;
+      margin-bottom: 30px;
+      font-style: italic;
+      text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+    }
 
-        .card.flipped {
-            transform: rotateY(180deg);
-        }
+    .card-container {
+      perspective: 1000px;
+      max-width: 350px;
+      margin: 0 auto 30px;
+      position: relative;
+    }
 
-        .card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            overflow: hidden;
-        }
+    .card {
+      width: 100%;
+      aspect-ratio: 2/3;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
 
-        .card-back {
-            background: rgba(26, 26, 46, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-            border: 3px solid rgba(212, 175, 55, 0.5);
-        }
+    .card.flipped { transform: rotateY(180deg); }
 
-        .card-back img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 15px;
-        }
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
 
-        .card-front {
-            background: rgba(26, 26, 46, 0.6);
-            transform: rotateY(180deg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-            border: 3px solid rgba(212, 175, 55, 0.5);
-        }
+    .card-back, .card-front {
+      background: rgba(26, 26, 46, 0.6);
+      border: 3px solid rgba(212, 175, 55, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+    }
 
-        .card-front img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 15px;
-        }
+    .card-front { transform: rotateY(180deg); }
 
-        .card-meaning {
-            background: rgba(26, 26, 46, 0.95);
-            color: #f0e6d2;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 15px;
-            border: 2px solid #d4af37;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            min-height: 180px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+    .card-face img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 15px;
+    }
 
-        .card-meaning h2 {
-            color: #5c4033;
-            font-size: 1.4em;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: bold;
-        }
+    .card-meaning {
+      background: rgba(26, 26, 46, 0.95);
+      color: #f0e6d2;
+      padding: 20px;
+      border-radius: 15px;
+      border: 2px solid #d4af37;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      min-height: 180px;
+      margin-top: 20px;
+    }
 
-        .card-meaning .keywords {
-            color: #8b6914;
-            font-style: italic;
-            margin-bottom: 15px;
-            font-size: 1.1em;
-            font-weight: 600;
-        }
+    .card-meaning h2 {
+      color: #d4af37;
+      font-size: 1.3em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
 
-        .card-meaning .description {
-            line-height: 1.6;
-            font-size: 1em;
-        }
+    .card-meaning .keywords {
+      color: #ffde77;
+      font-style: italic;
+      margin-bottom: 15px;
+      font-size: 1.1em;
+      font-weight: 600;
+    }
 
-        .draw-button {
-            background: linear-gradient(135deg, #d4af37 0%, #c5a028 100%);
-            color: #1a1a2e;
-            border: none;
-            padding: 18px 50px;
-            font-size: 1.2em;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            letter-spacing: 1px;
-            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
-            transition: all 0.3s ease;
-            font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-            margin-bottom: 15px;
-        }
+    .card-meaning .description {
+      line-height: 1.6;
+      font-size: 1em;
+    }
 
-        .draw-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
-            background: linear-gradient(135deg, #e5c048 0%, #d4af37 100%);
-        }
+    .draw-button, .share-button, .redraw-button {
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: 'Noto Sans KR', sans-serif;
+      transition: 0.3s;
+      margin: 10px 5px;
+      padding: 14px 35px;
+      font-size: 1em;
+    }
 
-        .draw-button:active {
-            transform: translateY(-1px);
-        }
+    .draw-button {
+      background: linear-gradient(135deg, #d4af37, #c5a028);
+      color: #1a1a2e;
+    }
 
-        .draw-button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
+    .share-button {
+      background: #FEE500;
+      color: #000;
+    }
 
-        .sparkles {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            top: 0;
-            left: 0;
-            z-index: 999;
-        }
+    .redraw-button {
+      background: linear-gradient(135deg, #8b7355, #6b5d52);
+      color: #f0e6d2;
+    }
 
-        .sparkle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #d4af37;
-            border-radius: 50%;
-            animation: sparkle 1.5s ease-out forwards;
-            opacity: 0;
-        }
-
-        @keyframes sparkle {
-            0% {
-                opacity: 1;
-                transform: scale(0) rotate(0deg);
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-                transform: scale(1) rotate(180deg) translateY(-100px);
-            }
-        }
-
-        .instruction {
-            color: #5c4033;
-            margin-top: 20px;
-            font-size: 0.95em;
-            font-style: italic;
-            opacity: 0.9;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
-        }
-
-        .share-button {
-            background: #FEE500;
-            color: #000000;
-            border: none;
-            padding: 12px 35px;
-            font-size: 1em;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 15px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .share-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            background: #FFD700;
-        }
-
-        .share-button:active {
-            transform: translateY(0);
-        }
-
-        .share-button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .share-button::before {
-            content: '💬';
-            font-size: 1.2em;
-        }
-
-        .redraw-button {
-            background: linear-gradient(135deg, #8b7355 0%, #6b5d52 100%);
-            color: #f0e6d2;
-            border: none;
-            padding: 12px 35px;
-            font-size: 1em;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 15px;
-            margin-left: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .redraw-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            background: linear-gradient(135deg, #9b8365 0%, #7b6d62 100%);
-        }
-
-        .redraw-button:active {
-            transform: translateY(0);
-        }
-
-        .redraw-button::before {
-            content: '🔄';
-            font-size: 1.2em;
-        }
-    </style>
+    .instruction {
+      color: #5c4033;
+      margin-top: 10px;
+      font-size: 0.9em;
+      font-style: italic;
+    }
+  </style>
 </head>
 <body>
-    <div class="sparkles" id="sparkles"></div>
-    
-    <div class="container">
-        <h1>✨ The Muggle's Guide to Lenormand ✨</h1>
-        <p class="subtitle">A Daily Oracle for Wandless Witches and Wizards</p>
-        
-        <div class="card-container">
-            <div class="card" id="card">
-                <div class="card-face card-back">
-                    <img src="mgl_b_gr.png" alt="카드 뒷면">
-                </div>
-                <div class="card-face card-front" id="cardFront">
-                    <img id="cardImage" src="" alt="카드">
-                </div>
-            </div>
-        </div>
-        
-        <div class="card-meaning" id="cardMeaning" style="display: none;">
-            <h2 id="cardTitle"></h2>
-            <div class="keywords" id="cardKeywords"></div>
-            <div class="description" id="cardDescription"></div>
-        </div>
+  <div class="container">
+    <h1>✨ The Muggle's Guide to Lenormand ✨</h1>
+    <p class="subtitle">A Daily Oracle for Wandless Witches and Wizards</p>
 
-        <button class="draw-button" id="drawButton">카드 뽑기</button>
-        <div style="margin-top: 10px;">
-            <button class="share-button" id="shareButton" style="display: none;">카카오톡 공유하기</button>
-            <button class="redraw-button" id="redrawButton" style="display: none;">새로운 카드 뽑기</button>
+    <div class="card-container">
+      <div class="card" id="card">
+        <div class="card-face card-back">
+          <img src="mgl_b_gr.png" alt="카드 뒷면">
         </div>
-        <p class="instruction">카드를 탭하면 다시 뒤집을 수 있습니다</p>
+        <div class="card-face card-front">
+          <img id="cardImage" src="" alt="카드 앞면">
+        </div>
+      </div>
     </div>
 
-    <script>
-        // 연습용 2장의 카드만 사용
-        const cards = [
-            { 
-                num: '01', 
-                name: 'RIDER', 
-                image: '01_RIDER.png',
-                keywords: '소식, 방문자, 새로운 시작', 
-                meaning: '좋은 소식이나 새로운 기회가 빠르게 다가오고 있습니다. 해그리드처럼 예상치 못한 방문자나 메시지를 받을 수 있습니다. 모험이 당신을 기다리고 있어요!' 
-            },
-            { 
-                num: '02', 
-                name: 'CLOVER', 
-                image: '02_CLOVER.png',
-                keywords: '행운, 기회, 단기간의 행복', 
-                meaning: '펠릭스 펠리시스(행운의 물약)처럼 작지만 확실한 행운이 찾아옵니다. 기회를 놓치지 마세요. 긍정적인 태도가 더 큰 행운을 불러옵니다!' 
-            }
-        ];
+    <div class="card-meaning" id="cardMeaning" style="display: none;">
+      <h2 id="cardTitle"></h2>
+      <div class="keywords" id="cardKeywords"></div>
+      <div class="description" id="cardDescription"></div>
+    </div>
 
-        const card = document.getElementById('card');
-        const cardFront = document.getElementById('cardFront');
-        const cardImage = document.getElementById('cardImage');
-        const cardMeaning = document.getElementById('cardMeaning');
-        const cardTitle = document.getElementById('cardTitle');
-        const cardKeywords = document.getElementById('cardKeywords');
-        const cardDescription = document.getElementById('cardDescription');
-        const drawButton = document.getElementById('drawButton');
-        const shareButton = document.getElementById('shareButton');
-        const redrawButton = document.getElementById('redrawButton');
-        const sparklesContainer = document.getElementById('sparkles');
+    <button class="draw-button" id="drawButton">카드 뽑기</button>
+    <button class="share-button" id="shareButton" style="display: none;">카카오톡 공유하기</button>
+    <button class="redraw-button" id="redrawButton" style="display: none;">새 카드 뽑기</button>
 
-        let isFlipped = false;
-        let currentCard = null;
-        let drawDate = null;
+    <p class="instruction">카드를 탭하면 다시 뒤집을 수 있습니다</p>
+  </div>
 
-        function createSparkles() {
-            for (let i = 0; i < 30; i++) {
-                setTimeout(() => {
-                    const sparkle = document.createElement('div');
-                    sparkle.className = 'sparkle';
-                    sparkle.style.left = Math.random() * 100 + '%';
-                    sparkle.style.top = Math.random() * 100 + '%';
-                    sparklesContainer.appendChild(sparkle);
-                    
-                    setTimeout(() => sparkle.remove(), 1500);
-                }, i * 50);
-            }
-        }
+  <script>
+    const cards = [
+      { 
+        num: '01', name: 'RIDER', image: '01_RIDER.png',
+        keywords: '소식, 방문자, 새로운 시작',
+        meaning: '좋은 소식이나 새로운 기회가 빠르게 다가오고 있습니다. 모험이 당신을 기다리고 있어요!'
+      },
+      { 
+        num: '02', name: 'CLOVER', image: '02_CLOVER.png',
+        keywords: '행운, 기회, 단기간의 행복',
+        meaning: '작지만 확실한 행운이 찾아옵니다. 기회를 놓치지 마세요!'
+      }
+    ];
 
-        function getFormattedDate() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            return `${year}.${month}.${day}`;
-        }
+    const card = document.getElementById('card');
+    const cardImage = document.getElementById('cardImage');
+    const cardMeaning = document.getElementById('cardMeaning');
+    const cardTitle = document.getElementById('cardTitle');
+    const cardKeywords = document.getElementById('cardKeywords');
+    const cardDescription = document.getElementById('cardDescription');
+    const drawButton = document.getElementById('drawButton');
+    const shareButton = document.getElementById('shareButton');
+    const redrawButton = document.getElementById('redrawButton');
 
-        function drawCard() {
-            if (isFlipped) {
-                card.classList.remove('flipped');
-                isFlipped = false;
-                cardMeaning.style.display = 'none';
-                shareButton.style.display = 'none';
-                redrawButton.style.display = 'none';
-                return;
-            }
+    let isFlipped = false;
+    let currentCard = null;
 
-            drawButton.disabled = true;
-            createSparkles();
+    function drawCard() {
+      const random = Math.floor(Math.random() * cards.length);
+      currentCard = cards[random];
+      cardImage.src = currentCard.image;
+      cardTitle.textContent = `${currentCard.num}. ${currentCard.name}`;
+      cardKeywords.textContent = currentCard.keywords;
+      cardDescription.textContent = currentCard.meaning;
 
-            // 랜덤으로 카드 선택
-            const randomCard = cards[Math.floor(Math.random() * cards.length)];
-            currentCard = randomCard;
-            drawDate = getFormattedDate();
-            
-            // 카드 이미지 설정
-            cardImage.src = randomCard.image;
-            
-            // 카드 정보 설정
-            cardTitle.textContent = `${randomCard.num}. ${randomCard.name}`;
-            cardKeywords.textContent = randomCard.keywords;
-            cardDescription.textContent = randomCard.meaning;
+      setTimeout(() => {
+        card.classList.add('flipped');
+        cardMeaning.style.display = 'block';
+        drawButton.style.display = 'none';
+        shareButton.style.display = 'inline-block';
+        redrawButton.style.display = 'inline-block';
+        isFlipped = true;
+      }, 300);
+    }
 
-            setTimeout(() => {
-                card.classList.add('flipped');
-                isFlipped = true;
-                setTimeout(() => {
-                    cardMeaning.style.display = 'flex';
-                    shareButton.style.display = 'inline-flex';
-                    redrawButton.style.display = 'inline-flex';
-                    drawButton.style.display = 'none';
-                }, 400);
-                drawButton.disabled = false;
-            }, 300);
-        }
+    function resetCard() {
+      card.classList.remove('flipped');
+      cardMeaning.style.display = 'none';
+      drawButton.style.display = 'inline-block';
+      shareButton.style.display = 'none';
+      redrawButton.style.display = 'none';
+      isFlipped = false;
+    }
 
-        function redrawCard() {
-            // 카드 뒤집고 초기화
-            card.classList.remove('flipped');
-            isFlipped = false;
-            cardMeaning.style.display = 'none';
-            shareButton.style.display = 'none';
-            redrawButton.style.display = 'none';
-            drawButton.style.display = 'inline-block';
-            
-            // 잠시 후 새 카드 자동 뽑기
-            setTimeout(() => {
-                drawCard();
-            }, 500);
-        }
+    function redrawCard() {
+      resetCard();
+      setTimeout(drawCard, 600);
+    }
 
-        drawButton.addEventListener('click', drawCard);
-        redrawButton.addEventListener('click', redrawCard);
-        
-        card.addEventListener('click', () => {
-            if (isFlipped) {
-                card.classList.remove('flipped');
-                isFlipped = false;
-                cardMeaning.style.display = 'none';
-                shareButton.style.display = 'none';
-                redrawButton.style.display = 'none';
-                drawButton.style.display = 'inline-block';
-            }
+    drawButton.addEventListener('click', drawCard);
+    redrawButton.addEventListener('click', redrawCard);
+    card.addEventListener('click', () => { if (isFlipped) resetCard(); });
+
+    shareButton.addEventListener('click', () => {
+      if (!currentCard) return;
+
+      const shareText =
+        `🔮 오늘의 카드: ${currentCard.name}\n\n${currentCard.keywords}\n\n${currentCard.meaning}\n\n` +
+        `✨ 더 보러가기:\nhttps://hie552.github.io/the-muggles-guide-to-lenormand/`;
+
+      if (navigator.share) {
+        navigator.share({
+          title: `오늘의 카드 - ${currentCard.name}`,
+          text: shareText,
+          url: 'https://hie552.github.io/the-muggles-guide-to-lenormand/',
         });
-
-        // 카카오톡 공유 버튼
-        shareButton.addEventListener('click', () => {
-            if (!currentCard || !drawDate) return;
-
-            const shareText = `📰 Daily Prophet for ${drawDate}\n\n🔮 The Muggle's Guide to Lenormand\n\n${currentCard.num}. ${currentCard.name}\n${currentCard.keywords}\n\n${currentCard.meaning}`;
-            
-            // 카카오톡 공유 (모바일)
-            if (navigator.share) {
-                navigator.share({
-                    title: 'The Muggle\'s Guide to Lenormand',
-                    text: shareText
-                }).catch(err => console.log('공유 취소됨'));
-            } else {
-                // 텍스트 복사 (데스크톱)
-                navigator.clipboard.writeText(shareText).then(() => {
-                    alert('결과가 클립보드에 복사되었습니다!\n카카오톡에서 붙여넣기 해주세요.');
-                }).catch(() => {
-                    alert('공유 기능을 사용할 수 없습니다.');
-                });
-            }
+      } else {
+        navigator.clipboard.writeText(shareText).then(() => {
+          alert('결과가 복사되었습니다! 카카오톡에 붙여넣어 공유하세요 💛');
         });
-
-        // NFC 감지 시 자동으로 카드 뽑기
-        if ('NDEFReader' in window) {
-            const ndef = new NDEFReader();
-            ndef.scan().then(() => {
-                console.log('NFC 스캔 시작');
-                ndef.addEventListener('reading', () => {
-                    console.log('NFC 태그 감지됨');
-                    if (!isFlipped) {
-                        drawCard();
-                    }
-                });
-            }).catch(err => {
-                console.log('NFC를 사용할 수 없습니다:', err);
-            });
-        }
-    </script>
+      }
+    });
+  </script>
 </body>
 </html>
