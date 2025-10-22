@@ -101,34 +101,36 @@
         }
 
         .card-back {
-            background: #1a1a2e;
+            background: rgba(26, 26, 46, 0.6);
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 10px;
+            padding: 15px;
+            border: 3px solid rgba(212, 175, 55, 0.5);
         }
 
         .card-back img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            border-radius: 10px;
+            border-radius: 15px;
         }
 
         .card-front {
-            background: #1a1a2e;
+            background: rgba(26, 26, 46, 0.6);
             transform: rotateY(180deg);
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 10px;
+            padding: 15px;
+            border: 3px solid rgba(212, 175, 55, 0.5);
         }
 
         .card-front img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            border-radius: 10px;
+            border-radius: 15px;
         }
 
         .card-meaning {
@@ -240,6 +242,45 @@
             opacity: 0.9;
             text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
         }
+
+        .share-button {
+            background: #FEE500;
+            color: #000000;
+            border: none;
+            padding: 12px 35px;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .share-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            background: #FFD700;
+        }
+
+        .share-button:active {
+            transform: translateY(0);
+        }
+
+        .share-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .share-button::before {
+            content: '💬';
+            font-size: 1.2em;
+        }
     </style>
 </head>
 <body>
@@ -267,6 +308,7 @@
         </div>
 
         <button class="draw-button" id="drawButton">카드 뽑기</button>
+        <button class="share-button" id="shareButton" style="display: none;">카카오톡 공유하기</button>
         <p class="instruction">카드를 탭하면 다시 뒤집을 수 있습니다</p>
     </div>
 
@@ -297,9 +339,11 @@
         const cardKeywords = document.getElementById('cardKeywords');
         const cardDescription = document.getElementById('cardDescription');
         const drawButton = document.getElementById('drawButton');
+        const shareButton = document.getElementById('shareButton');
         const sparklesContainer = document.getElementById('sparkles');
 
         let isFlipped = false;
+        let currentCard = null;
 
         function createSparkles() {
             for (let i = 0; i < 30; i++) {
@@ -320,6 +364,7 @@
                 card.classList.remove('flipped');
                 isFlipped = false;
                 cardMeaning.style.display = 'none';
+                shareButton.style.display = 'none';
                 return;
             }
 
@@ -328,6 +373,7 @@
 
             // 랜덤으로 카드 선택
             const randomCard = cards[Math.floor(Math.random() * cards.length)];
+            currentCard = randomCard;
             
             // 카드 이미지 설정
             cardImage.src = randomCard.image;
@@ -342,6 +388,7 @@
                 isFlipped = true;
                 setTimeout(() => {
                     cardMeaning.style.display = 'flex';
+                    shareButton.style.display = 'inline-flex';
                 }, 400);
                 drawButton.disabled = false;
             }, 300);
@@ -354,6 +401,29 @@
                 card.classList.remove('flipped');
                 isFlipped = false;
                 cardMeaning.style.display = 'none';
+                shareButton.style.display = 'none';
+            }
+        });
+
+        // 카카오톡 공유 버튼
+        shareButton.addEventListener('click', () => {
+            if (!currentCard) return;
+
+            const shareText = `🔮 The Muggle's Guide to Lenormand\n\n${currentCard.num}. ${currentCard.name}\n${currentCard.keywords}\n\n${currentCard.meaning}`;
+            
+            // 카카오톡 공유 (모바일)
+            if (navigator.share) {
+                navigator.share({
+                    title: 'The Muggle\'s Guide to Lenormand',
+                    text: shareText
+                }).catch(err => console.log('공유 취소됨'));
+            } else {
+                // 텍스트 복사 (데스크톱)
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('결과가 클립보드에 복사되었습니다!\n카카오톡에서 붙여넣기 해주세요.');
+                }).catch(() => {
+                    alert('공유 기능을 사용할 수 없습니다.');
+                });
             }
         });
 
