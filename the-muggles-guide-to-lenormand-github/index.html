@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Muggle's Guide to Lenormand</title>
 
-  <!-- 🔮 SNS 미리보기 메타데이터 -->
   <meta property="og:title" content="The Muggle's Guide to Lenormand">
   <meta property="og:description" content="당신의 오늘의 마법 같은 메시지를 확인해보세요. ✨">
   <meta property="og:image" content="https://hie552.github.io/the-muggles-guide-to-lenormand/mgl_b_gr.png">
@@ -279,8 +278,14 @@
     shareButton.addEventListener('click', () => {
       if (!currentCard) return;
 
+      const today = new Date();
+      const dateStr = today.toISOString().split('T')[0]; // YYYY-MM-DD
+
       const shareText =
-        `🔮 오늘의 카드: ${currentCard.name}\n\n${currentCard.keywords}\n\n${currentCard.meaning}\n\n` +
+        `📰 Daily Prophet for ${dateStr}\n\n` +
+        `🔮 오늘의 카드: ${currentCard.num}. ${currentCard.name}\n` +
+        `${currentCard.keywords}\n\n` +
+        `${currentCard.meaning}\n\n` +
         `✨ 더 보러가기:\nhttps://hie552.github.io/the-muggles-guide-to-lenormand/`;
 
       if (navigator.share) {
