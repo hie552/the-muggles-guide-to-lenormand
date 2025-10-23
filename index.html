@@ -54,11 +54,12 @@
     }
 
     h1 {
-      font-size: 1.7em;
+      font-size: 1.5em;
       color: #2c1810;
       margin-bottom: 8px;
       text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
       font-weight: bold;
+      line-height: 1.3;
     }
 
     .subtitle {
@@ -103,7 +104,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 15px 15px;
+      padding: 12px 12px;
     }
 
     .card-front { transform: rotateY(180deg); }
@@ -112,7 +113,7 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      border-radius: 12px;
+      border-radius: 10px;
     }
 
     .card-meaning {
@@ -412,8 +413,13 @@
     shareButton.addEventListener('click', () => {
       if (!currentCard) return;
 
+      // 현재 날짜를 한국 시간대로 가져오기
       const today = new Date();
-      const dateStr = today.toISOString().split('T')[0]; // YYYY-MM-DD
+      const koreaTime = new Date(today.getTime() + (9 * 60 * 60 * 1000)); // UTC+9
+      const year = koreaTime.getUTCFullYear();
+      const month = String(koreaTime.getUTCMonth() + 1).padStart(2, '0');
+      const day = String(koreaTime.getUTCDate()).padStart(2, '0');
+      const dateStr = `${year}.${month}.${day}`;
 
       const shareText =
         `📰 Daily Prophet for ${dateStr}\n\n` +
