@@ -48,27 +48,29 @@
       text-align: center;
       max-width: 480px;
       width: 90%;
-      padding: 25px;
+      padding: 25px 15px;
       position: relative;
       z-index: 1;
     }
 
     h1 {
-      font-size: 1.35em;
+      font-size: 1.4em;
       color: #2c1810;
       margin-bottom: 5px;
       text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
       font-weight: bold;
       line-height: 1.2;
-      white-space: nowrap;
+      word-break: keep-all;
+      text-align: center;
     }
 
     .subtitle {
       color: #5c4033;
-      font-size: 0.9em;
+      font-size: 0.88em;
       margin-bottom: 30px;
       font-style: italic;
       text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+      text-align: center;
     }
 
     .card-container {
@@ -94,9 +96,9 @@
       width: 100%;
       height: 100%;
       backface-visibility: hidden;
-      border-radius: 15px;
       overflow: hidden;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border-radius: 0;
     }
 
     .card-back, .card-front {
@@ -107,6 +109,8 @@
       align-items: center;
       padding: 12px;
       border-radius: 15px;
+      width: 100%;
+      height: 100%;
     }
 
     .card-front { transform: rotateY(180deg); }
@@ -115,7 +119,7 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      border-radius: 10px;
+      border-radius: 8px;
     }
 
     .card-meaning {
@@ -176,6 +180,15 @@
     .redraw-button {
       background: linear-gradient(135deg, #8b7355, #6b5d52);
       color: #f0e6d2;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.25em;
+      }
+      .subtitle {
+        font-size: 0.82em;
+      }
     }
 
     .instruction {
