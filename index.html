@@ -188,7 +188,7 @@
 
     @media (max-width: 480px) {
       h1 {
-        font-size: 1.6em;
+        font-size: 1.4em;
       }
       .subtitle {
         font-size: 0.82em;
@@ -440,7 +440,15 @@
       const day = String(koreaTime.getUTCDate()).padStart(2, '0');
       const dateStr = `${year}.${month}.${day}`;
 
-      const shareText =
+      // 링크 없이 텍스트만 (PC용)
+      const shareTextOnly =
+        `📰 Daily Prophet for ${dateStr}\n\n` +
+        `🔮 오늘의 카드: ${currentCard.num}. ${currentCard.name}\n` +
+        `${currentCard.keywords}\n\n` +
+        `${currentCard.meaning}`;
+
+      // 링크 포함 버전 (모바일용)
+      const shareTextWithLink =
         `📰 Daily Prophet for ${dateStr}\n\n` +
         `🔮 오늘의 카드: ${currentCard.num}. ${currentCard.name}\n` +
         `${currentCard.keywords}\n\n` +
@@ -452,31 +460,53 @@
         try {
           await navigator.share({
             title: `오늘의 카드 - ${currentCard.name}`,
-            text: shareText,
-            url: 'https://hie552.github.io/the-muggles-guide-to-lenormand/',
+            text: shareTextWithLink
           });
         } catch (err) {
-          console.log('공유 취소됨');
+          if (err.name !== 'AbortError') {
+            console.log('공유 오류:', err);
+          }
         }
       } 
-      // PC: 클립보드 복사
+      // PC: 클립보드 복사 (링크 제외)
       else {
         try {
-          await navigator.clipboard.writeText(shareText);
-          alert('결과가 복사되었습니다! 카카오톡에 붙여넣어 공유하세요 💛');
+          await navigator.clipboard.writeText(shareTextOnly);
+          // 복사 성공 알림
+          const originalText = shareButton.textContent;
+          const originalBg = shareButton.style.background;
+          shareButton.textContent = '✅ 복사완료! 카톡에 붙여넣으세요';
+          shareButton.style.background = '#4CAF50';
+          setTimeout(() => {
+            shareButton.textContent = originalText;
+            shareButton.style.background = originalBg || '#FEE500';
+          }, 3000);
         } catch (err) {
           // 클립보드 API 실패 시 대체 방법
           const textArea = document.createElement('textarea');
-          textArea.value = shareText;
+          textArea.value = shareTextOnly;
           textArea.style.position = 'fixed';
           textArea.style.left = '-999999px';
+          textArea.style.top = '0';
           document.body.appendChild(textArea);
+          textArea.focus();
           textArea.select();
           try {
-            document.execCommand('copy');
-            alert('결과가 복사되었습니다! 카카오톡에 붙여넣어 공유하세요 💛');
+            const successful = document.execCommand('copy');
+            if (successful) {
+              const originalText = shareButton.textContent;
+              const originalBg = shareButton.style.background;
+              shareButton.textContent = '✅ 복사완료! 카톡에 붙여넣으세요';
+              shareButton.style.background = '#4CAF50';
+              setTimeout(() => {
+                shareButton.textContent = originalText;
+                shareButton.style.background = originalBg || '#FEE500';
+              }, 3000);
+            } else {
+              alert('복사 실패\n\n아래 내용을 직접 복사해주세요:\n\n' + shareTextOnly);
+            }
           } catch (err2) {
-            alert('복사에 실패했습니다. 수동으로 복사해주세요.');
+            alert('복사 실패\n\n아래 내용을 직접 복사해주세요:\n\n' + shareTextOnly);
           }
           document.body.removeChild(textArea);
         }
